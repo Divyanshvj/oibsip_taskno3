@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Todo App</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .todo-form {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    .todo-form input[type="text"] {
+      width: 300px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    .todo-form button {
+      margin-left: 10px;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .todo-list {
+      margin-top: 40px;
+      list-style: none;
+      padding: 0;
+    }
+
+    .todo-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .todo-item span {
+      flex-grow: 1;
+      margin-right: 10px;
+    }
+
+    .todo-item button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .completed-tasks {
+      margin-top: 40px;
+      list-style: none;
+      padding: 0;
+    }
+
+    .completed-tasks li {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h1>Todo App</h1>
+
+  <div class="todo-form">
+    <input type="text" id="new-todo-item" placeholder="Enter a new task">
+    <button id="add-todo">Add Task</button>
+  </div>
+
+  <ul class="todo-list" id="todo-list">
+  </ul>
+
+  <ul class="completed-tasks" id="completed-tasks">
+  </ul>
+
+  <script>
+    const todoList = document.getElementById('todo-list');
+    const completedTasks = document.getElementById('completed-tasks');
+    const newTodoInput = document.getElementById('new-todo-item');
+    const addTodoButton = document.getElementById('add-todo');
+
+    // function to add a new todo item
+    function addTodo() {
+      const newTodo = document.createElement('li');
+      newTodo.className = 'todo-item';
+      newTodo.innerHTML = `<span>${newTodoInput.value}</span><button class="complete-btn">Complete</button>`;
+      todoList.appendChild(newTodo);
+
+      newTodoInput.value = '';
+
+      // attach event listener to the Complete button
+      const completeButton = newTodo.querySelector('.complete-btn');
+      completeButton.addEventListener('click', completeTodo);
+    }
+
+    // function to mark a todo item as completed
+    function completeTodo() {
+      const completedTodo = this.parentNode;
+      completedTodo.removeChild(this);
+      completedTodo.style.backgroundColor = '#f0f0f0';
+      completedTodo.style.color = 'green';
+
+      completedTasks.appendChild(completedTodo);
+    }
+
+    addTodoButton.addEventListener('click', addTodo);
+
+// attach event listener to the Enter key
+newTodoInput.addEventListener('keydown', function(event) {
+  if (event.keyCode === 13) {
+    addTodo();
+  }
+});
+</script>
+</body>
+</html>
